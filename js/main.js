@@ -12,7 +12,7 @@ var faceValue = 0;
 $("#roll").click(function() {
   faceValue = 0;
     $("#submissionForm").show();
-    $(".correct").remove();
+    $(".correct,.fail").remove();
     var input = $("#val").val('');
 
 var diceArea$ = $("#diceArea");
@@ -29,19 +29,24 @@ diceArea$.find(".dice").remove();
 $("#submit").click(function() {
 
 var input = $("#val").val();
+var statusArea$ = $("#statusArea");
+
 input = parseInt(input)
+
 if (input === faceValue) {
-    $("#submissionForm").append($("<div class='correct'>").text("Nice Job Einstein!"));
+    $(".correct,.fail").remove();
+    $("#statusArea").append($("<div class='correct'>").text("Nice Job Einstein! Play again."));
 
 
 } else {
-  $("#submissionForm").append($("<div class='fail'>").text("Keep Trying"));
+  $(".correct,.fail").remove();
+  $("#statusArea").append($("<div class='fail'>").text("Keep Trying"));
 }
 });
 
 
 // add timer performance.now();
-// add remove success status
-// add failure status (one static status box)
+// add remove success status X
+// add failure status (one static status box) X
 // on roll set status to ''
 //
