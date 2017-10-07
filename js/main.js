@@ -8,29 +8,29 @@ var DICE_COUNT = 4;
 var faceValue = 0;
 var timerStart = 0;
 var timerCheck = 0;
+var clock = setInterval (stopClock, 100);
+
+var timerArea$ = $("#timerArea");
+var time$ = $("<div class='time'>")
+
+function clockVal() {
+  var t = Math.floor(performance.now() - timerStart) / 1000;
+  $("#timerArea").replaceWith(time$.text(t + ' seconds'));
+};
+
+function stopClock(){
+}
+
 //
 // Form initialization
 //
 $("#roll").click(function() {
   faceValue = 0;
   timerStart = performance.now();
-    $("#submissionForm").show();
+    $("#submissionForm, .time, #submit").show();
     $(".correct,.fail").remove();
     var input = $("#val").val('').focus();
-
-    $("#val").keyup(function () {
-           if (this.value.length == this.maxLength) {
-             $(this).next().focus();
-           }
-     });
-
-    var timer$ = $("#timer");
-    var time$ = $("<div class='time'>")
-    timer$.find(".time").remove();
-    $("#timer").show().append(time$.text("Timer Fx Here"));
-    $("#submit").show();
-
-
+    var clock = setInterval (clockVal, 100);
 
 var diceArea$ = $("#diceArea");
 diceArea$.find(".dice").remove();
@@ -41,6 +41,12 @@ diceArea$.find(".dice").remove();
       dice$.text (val);
       diceArea$.append(dice$);
     }
+
+    $("#val").keyup(function () {
+           if (this.value.length == this.maxLength) {
+             $(this).next().focus();
+           }
+     });
 });
 
 $("#submit").click(function() {
@@ -55,7 +61,7 @@ if (input === faceValue) {
     $("#statusArea").append($("<div class='correct'>").text("Nice work. You got it right in " + (timerEnd) + " seconds. Hit Enter to Sum again!"));
     $("#submit").hide();
     $("#roll").focus();
-
+    $(".time").hide();
 
 } else {
   $(".correct,.fail").remove();
