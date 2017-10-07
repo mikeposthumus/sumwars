@@ -9,7 +9,6 @@ var faceValue = 0;
 var timerStart = 0;
 var timerCheck = 0;
 var clock = setInterval (stopClock, 100);
-
 var timerArea$ = $("#timerArea");
 var time$ = $("<div class='time'>")
 
@@ -56,12 +55,11 @@ var statusArea$ = $("#statusArea");
 input = parseInt(input)
 
 if (input === faceValue) {
-    $(".correct,.fail").remove();
+    $(".correct,.fail, #submit, .time").remove();
     var timerEnd = timerCheck
     $("#statusArea").append($("<div class='correct'>").text("Nice work. You got it right in " + (timerEnd) + " seconds. Hit Enter to Sum again!"));
-    $("#submit").hide();
     $("#roll").focus();
-    $(".time").hide();
+
 
 } else {
   $(".correct,.fail").remove();
@@ -69,10 +67,3 @@ if (input === faceValue) {
   input = $("#val").val('').focus();
 }
 });
-
-
-// add timer performance.now(); x
-// add remove success status X
-// add failure status (one static status box) X
-// on roll set status to '' x
-//
