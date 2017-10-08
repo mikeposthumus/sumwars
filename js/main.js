@@ -55,7 +55,8 @@ var statusArea$ = $("#statusArea");
 input = parseInt(input)
 
 if (input === faceValue) {
-    $(".correct,.fail, #submit, .time").remove();
+    $(".correct,.fail").remove();
+    $("#submit, .time").hide();
     var timerEnd = timerCheck
     $("#statusArea").append($("<div class='correct'>").text("Nice work. You got it right in " + (timerEnd) + " seconds. Hit Enter to Sum again!"));
     $("#roll").focus();
