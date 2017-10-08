@@ -6,6 +6,7 @@
 //
 // Global
 var diceCount = 4;
+var difficulty = 0;
 var faceValue = 0;
 var timerStart = 0;
 var timerCheck = 0;
@@ -15,7 +16,7 @@ var time$ = $("<div class='time'>")
 
 function clockVal() {
   var t = Math.floor(performance.now() - timerStart) / 1000;
-  $("#timerArea").replaceWith(time$.text(t + ' seconds'));
+  $("#timerArea").replaceWith(time$.text(t.toFixed(2) + ' seconds'));
 };
 
 function stopClock(){
@@ -26,12 +27,24 @@ function stopClock(){
 //
 $("#roll").click(function() {
   diceCount = $("#diceNumber").val();
+  difficulty = $('#difficulty').val();
   faceValue = 0;
   timerStart = performance.now();
     $("#submissionForm, .time, #submit").show();
     $(".correct,.fail").remove();
     var input = $("#val").val('').focus();
     var clock = setInterval (clockVal, 100);
+    function getDifficulty() {
+      if (difficulty == 1) {
+        return 6
+      } else if (difficulty == 2) {
+        return 10
+      } else if (difficulty == 3) {
+        return 12
+      } else {
+        return 20
+      };
+    };
 
 var diceArea$ = $("#diceArea");
 diceArea$.find(".dice").remove();
@@ -43,7 +56,7 @@ diceArea$.find(".dice").remove();
       //gnerate dice based on array
 
       var dice$ = $("<div class='dice'>");
-      var val = Math.floor(Math.random() * 6) +1;
+      var val = Math.floor(Math.random() * getDifficulty() + 1);
       faceValue += val;
       dice$.text (val);
       diceArea$.append(dice$);
@@ -57,24 +70,18 @@ $('#val').keydown(function(event) {
        }
   });
 
-//$('#val').keyup(function(event) {
-  //  if (event.keyCode == 13) {
-  //      this.form.submit();
-    //    return false;
-  //     }
-  //});
-
 $("#submit").click(function() {
 var timerCheck = Math.floor((performance.now() - timerStart)) / 1000;
 var input = $("#val").val();
 var statusArea$ = $("#statusArea");
 input = parseInt(input)
+var points = ((difficulty*10) + ((diceCount*1000) ^ 2)) / timerCheck;
 
 if (input === faceValue) {
     $(".correct,.fail").remove();
     $("#submit, .time").hide();
     var timerEnd = timerCheck
-    $("#statusArea").append($("<div class='correct'>").text("Nice work. You got it right in " + (timerEnd) + " seconds. Hit Enter to Sum again!"));
+    $("#statusArea").append($("<div class='correct'>").text("You got it right in " + (timerEnd.toFixed(2)) + " seconds. That sum was worth " + (points.toFixed(0)) + " points. Hit Enter to Sum again!"));
     $("#roll").focus();
 
 

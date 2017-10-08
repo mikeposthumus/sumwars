@@ -25,11 +25,29 @@
           <h1>SUMWARS</h1>
           <h2>Are you ready to sum?!</h2>
           <div id="settings">
-            <label for="difficulty">Difficulty:</label>
-            <input id="difficulty" type="range" min="0" max="3" value="1"/>
+            <label for="difficulty">Difficulty (d6-d20):</label>
+            <input id="difficulty" type="range" min="1" max="4" value="1" list="difficultyMarks"/>
+            <datalist id="difficultyMarks">
+              <option value="1" label="d6">
+              <option value="2" label ="d10">
+              <option value="3" label="d12">
+              <option value="4" label="d20">
+           </datalist>
 
-            <label for="diceNumber">How many dice?</label>
-            <input id="diceNumber" type="number" min="1" max="10" value="4"/>
+            <label for="diceNumber">How many dice (2-20)?</label>
+            <input id="diceNumber" type="range" min="2" max="20" value="4" list="diceMarks"/>
+            <datalist id="diceMarks">
+              <option value="2" label="2">
+              <option value="4">
+              <option value="6">
+              <option value="8">
+              <option value="10" label="10">
+              <option value="12">
+              <option value="14">
+              <option value="16">
+              <option value="18">
+              <option value="20" label="20">
+          </datalist>
           </div>
 
             <button id="roll">Sumwars!</button>
@@ -41,7 +59,7 @@
 
         <div id ="statusArea">
         </div>
-        
+
         <div id="submissionForm">
             <input type="text" id="val" />
             <button type="button" id="submit">Submit</button>
