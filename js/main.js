@@ -1,10 +1,11 @@
 //
 // Constants
 //
-var DICE_COUNT = 4;
+
 
 //
 // Global
+var diceCount = 4;
 var faceValue = 0;
 var timerStart = 0;
 var timerCheck = 0;
@@ -24,6 +25,7 @@ function stopClock(){
 // Form initialization
 //
 $("#roll").click(function() {
+  diceCount = $("#diceNumber").val();
   faceValue = 0;
   timerStart = performance.now();
     $("#submissionForm, .time, #submit").show();
@@ -33,7 +35,7 @@ $("#roll").click(function() {
 
 var diceArea$ = $("#diceArea");
 diceArea$.find(".dice").remove();
-    for (var i=1; i <= DICE_COUNT; i++) {
+    for (var i=1; i <= diceCount; i++) {
 
       //set diceCount
       //check what dice options are slected
@@ -47,12 +49,20 @@ diceArea$.find(".dice").remove();
       diceArea$.append(dice$);
     }
 
-    $("#val").keyup(function () {
-           if (this.value.length == this.maxLength) {
-             $(this).next().focus();
-           }
-     });
 });
+
+$('#val').keydown(function(event) {
+    if (event.keyCode == 13) {
+    $('#submit').focus();
+       }
+  });
+
+//$('#val').keyup(function(event) {
+  //  if (event.keyCode == 13) {
+  //      this.form.submit();
+    //    return false;
+  //     }
+  //});
 
 $("#submit").click(function() {
 var timerCheck = Math.floor((performance.now() - timerStart)) / 1000;

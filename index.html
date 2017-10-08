@@ -24,6 +24,14 @@
         <div id="play">
           <h1>SUMWARS</h1>
           <h2>Are you ready to sum?!</h2>
+          <div id="settings">
+            <label for="difficulty">Difficulty:</label>
+            <input id="difficulty" type="range" min="0" max="3" value="1"/>
+
+            <label for="diceNumber">How many dice?</label>
+            <input id="diceNumber" type="number" min="1" max="10" value="4"/>
+          </div>
+
             <button id="roll">Sumwars!</button>
             <div id="diceArea"></div>
         </div>
@@ -35,7 +43,7 @@
         </div>
 
         <div id="submissionForm">
-            <input type="text" id="val" maxlength="2" />
+            <input type="text" id="val" />
             <button type="button" id="submit">Submit</button>
         </div>
 
