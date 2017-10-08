@@ -34,6 +34,12 @@ $("#roll").click(function() {
 var diceArea$ = $("#diceArea");
 diceArea$.find(".dice").remove();
     for (var i=1; i <= DICE_COUNT; i++) {
+
+      //set diceCount
+      //check what dice options are slected
+      //create object/array of dice mix: d6=2 d10=4 d20=3 etc.
+      //gnerate dice based on array
+
       var dice$ = $("<div class='dice'>");
       var val = Math.floor(Math.random() * 6) +1;
       faceValue += val;
