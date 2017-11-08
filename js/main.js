@@ -5,6 +5,7 @@
 
 //
 // Global
+var leaderBoard = [];
 var diceCount = 4;
 var difficulty = 0;
 var faceValue = 0;
@@ -71,23 +72,39 @@ $('#val').keydown(function(event) {
   });
 
 $("#submit").click(function() {
-var timerCheck = Math.floor((performance.now() - timerStart)) / 1000;
-var input = $("#val").val();
-var statusArea$ = $("#statusArea");
-input = parseInt(input)
-var points = ((difficulty*10) + ((diceCount*1000) ^ 2)) / timerCheck;
+  var timerCheck = Math.floor((performance.now() - timerStart)) / 1000;
+  var input = $("#val").val();
+  var statusArea$ = $("#statusArea");
+  input = parseInt(input)
+  var points = Math.floor(((difficulty*10) + ((diceCount*1000) ^ 2)) / timerCheck);
 
-if (input === faceValue) {
+  if (input === faceValue) {
+      $(".correct,.fail").remove();
+      $("#submit, .time").hide();
+      var timerEnd = timerCheck
+      $("#statusArea").append($("<div class='correct'>").text("You got it right in " + (timerEnd.toFixed(2)) + " seconds. That sum was worth " + points + " points. Hit Enter to Sum again!"));
+      $("#roll").focus();
+      saveScore( $("#playerName").val(), points);
+
+  } else {
     $(".correct,.fail").remove();
-    $("#submit, .time").hide();
-    var timerEnd = timerCheck
-    $("#statusArea").append($("<div class='correct'>").text("You got it right in " + (timerEnd.toFixed(2)) + " seconds. That sum was worth " + (points.toFixed(0)) + " points. Hit Enter to Sum again!"));
-    $("#roll").focus();
+    $("#statusArea").append($("<div class='fail'>").text("It took you " + (timerCheck) + " seconds to come up with a wrong answer... try again."));
+    input = $("#val").val('').focus();
+  }
+  });
 
+function saveScore (playerName, points) {
+  leaderBoard.push({name: playerName, points: points});
+  leaderBoard = _.orderBy(leaderBoard, ['points'], ['desc']);
+  updateLB();
+  //save leaderBoard to cookie
+  //
+};
 
-} else {
-  $(".correct,.fail").remove();
-  $("#statusArea").append($("<div class='fail'>").text("It took you " + (timerCheck) + " seconds to come up with a wrong answer... try again."));
-  input = $("#val").val('').focus();
-}
-});
+function updateLB () {
+  $('.leader li').remove();
+
+  for (var i = 0; i<Math.min(10, leaderBoard.length); i++) {
+  $('.leader').append("<li>" + leaderBoard[i].name +" "+ Math.floor(leaderBoard[i].points)+"</li>")
+};
+};
