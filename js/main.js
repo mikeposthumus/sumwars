@@ -6,11 +6,28 @@ const PLAYERNAME_KEY = "butts";
 
 //
 // Global
+dbAuthenticate();
+
 var leaderBoard = [];
-if (hasSetting(LEADERBOARD_KEY)) {
-    leaderBoard = readSetting(LEADERBOARD_KEY);
-    updateLB();
-}
+
+// Via AirBase
+readDatabase(
+    LEADERBOARD_KEY,
+    {
+        maxRecords: 10,
+        sort: [{
+            field: "points",
+            direction: "desc"
+        }]
+    },
+    function(records) {
+        records.forEach(function(rec) {
+            leaderBoard.push(rec.fields);
+        });
+
+        updateLB();
+    }
+);
 
 var diceCount = 4;
 var difficulty = 0;
@@ -52,7 +69,7 @@ function play(playerName) {
       $(".correct,.fail").remove();
 
       var input = $("#val").val('').focus();
-      var clock = setInterval (clockVal, 100);
+      clock = setInterval (clockVal, 100);
 
       function getDifficulty() {
         if (difficulty == 1) {
@@ -109,7 +126,7 @@ $('#val').keydown(function(event) {
   });
 
 $("#submit").click(function() {
-  var timerCheck = Math.floor((performance.now() - timerStart)) / 1000;
+  timerCheck = Math.floor((performance.now() - timerStart)) / 1000;
   var input = $("#val").val();
   var statusArea$ = $("#statusArea");
   input = parseInt(input)
@@ -138,14 +155,16 @@ $("#submit").click(function() {
   }
 });
 
-function saveScore (playerName, points) {
-  leaderBoard.push({name: playerName, points: points});
+function saveScore(playerName, points) {
+  var newData = {name: playerName, points: points};
+  leaderBoard.push(newData);
   leaderBoard = _.orderBy(leaderBoard, ['points'], ['desc']);
   updateLB();
 
   //save leaderBoard to local storage
-  saveSetting(LEADERBOARD_KEY, leaderBoard);
   saveSetting(PLAYERNAME_KEY, playerName);
+
+  createRecord(LEADERBOARD_KEY, newData);
 };
 
 function updateLB () {

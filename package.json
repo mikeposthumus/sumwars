@@ -1,0 +1,26 @@
+{
+  "name": "sumwars",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cli.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "dependencies": {
+    "airtable": "^0.5.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikeposthumus/sumwars.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikeposthumus/sumwars/issues"
+  },
+  "homepage": "https://github.com/mikeposthumus/sumwars#readme"
+}
